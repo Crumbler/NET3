@@ -20,29 +20,34 @@ namespace NET3
             InitializeComponent();
         }
 
-        private StringBuilder log, chatLog;
         private Socket tcpAccepter;
         private List<Member> members;
         private List<IPAddress> pendingConnections;
 
         private void LogChat(string s)
         {
-            lock (chatLog)
+            lock (RchtxtChat)
             {
-                chatLog.AppendLine(s);
+                RchtxtChat.AppendText(s + Environment.NewLine);
+
+                RchtxtChat.SelectionStart = RchtxtChat.Text.Length;
+                RchtxtChat.ScrollToCaret();
             }
         }
 
         private void Log(string s)
         {
-            lock (log)
+            var now = DateTime.Now;
+            string currTime = now.Hour.ToString() + ':' +
+                              now.Minute.ToString() + ':' +
+                              now.Second.ToString() + ": ";
+
+            lock (RchtxtLog)
             {
-                var now = DateTime.Now;
-                string currTime = now.Hour.ToString() + ':' +
-                                  now.Minute.ToString() + ':' +
-                                  now.Second.ToString() + ": ";
-                log.Append(currTime);
-                log.AppendLine(s);
+                RchtxtLog.AppendText(currTime + s + Environment.NewLine);
+
+                RchtxtLog.SelectionStart = RchtxtLog.Text.Length;
+                RchtxtLog.ScrollToCaret();
             }
         }
 
@@ -97,8 +102,6 @@ namespace NET3
             RchtxtChat.BringToFront();
             RchtxtLog.BringToFront();
 
-            log = new StringBuilder();
-            chatLog = new StringBuilder();
             members = new List<Member>();
             pendingConnections = new List<IPAddress>();
 
@@ -285,21 +288,6 @@ namespace NET3
                     memb.sock.Shutdown(SocketShutdown.Both);
                     memb.sock.Close();
                 }
-            }
-        }
-
-        private void TmrLog_Tick(object sender, EventArgs e)
-        {
-            lock (log)
-            {
-                if (RchtxtLog.TextLength != log.Length)
-                    RchtxtLog.Text = log.ToString();
-            }
-
-            lock (chatLog)
-            {
-                if (RchtxtChat.TextLength != chatLog.Length)
-                    RchtxtChat.Text = chatLog.ToString();
             }
         }
     }

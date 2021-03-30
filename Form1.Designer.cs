@@ -29,7 +29,6 @@ namespace NET3
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.RchtxtChat = new System.Windows.Forms.RichTextBox();
             this.BtnBroadcast = new System.Windows.Forms.Button();
             this.RchtxtLog = new System.Windows.Forms.RichTextBox();
@@ -37,7 +36,6 @@ namespace NET3
             this.PnlTop = new System.Windows.Forms.Panel();
             this.PanelChat = new System.Windows.Forms.Panel();
             this.TxtboxSend = new System.Windows.Forms.TextBox();
-            this.TmrLog = new System.Windows.Forms.Timer(this.components);
             this.PnlTop.SuspendLayout();
             this.PanelChat.SuspendLayout();
             this.SuspendLayout();
@@ -113,12 +111,6 @@ namespace NET3
             this.TxtboxSend.TabIndex = 1;
             this.TxtboxSend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtboxSend_KeyDown);
             // 
-            // TmrLog
-            // 
-            this.TmrLog.Enabled = true;
-            this.TmrLog.Interval = 500;
-            this.TmrLog.Tick += new System.EventHandler(this.TmrLog_Tick);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -148,7 +140,6 @@ namespace NET3
         private System.Windows.Forms.Panel PnlTop;
         private System.Windows.Forms.Panel PanelChat;
         private System.Windows.Forms.TextBox TxtboxSend;
-        private System.Windows.Forms.Timer TmrLog;
     }
 }
 
